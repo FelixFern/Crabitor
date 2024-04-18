@@ -1,6 +1,8 @@
-use std::fs::{self, File};
+use serde::{Deserialize, Serialize};
+use std::fs::File;
 
-struct FileStruct {
+#[derive(Debug, Serialize, Deserialize)]
+pub struct FileStruct {
     route: String,
 }
 
@@ -11,17 +13,19 @@ pub fn create_file(filename: String) {
     println!("{}", file_path);
     let _ = File::create(file_path);
 }
+
 #[tauri::command]
-pub fn get_file_list() -> Vec<FileStruct> {
+pub fn get_file_list() -> Result<Vec<FileStruct>, String> {
     let mut list: Vec<FileStruct> = Vec::new();
 
-    let paths = fs::read_dir("./data/").unwrap();
+    let paths =
+        std::fs::read_dir("./data").map_err(|e| format!("Error reading directory: {}", e))?;
     for path in paths {
         if let Ok(entry) = path {
-            let route = entry.path();
-            let route_str = route.to_str().unwrap_or("").to_string();
-            list.push(FileStruct { route: route_str });
+            let route = entry.path().to_str().unwrap_or("").to_string();
+            list.push(FileStruct { route });
         }
     }
-    list
+
+    Ok(list)
 }
