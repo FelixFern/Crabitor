@@ -1,15 +1,24 @@
 import "./App.css";
 import { Sidebar, ThemeProvider } from "./components/custom";
-import { useEditorImpl } from "./hooks";
+import { Button } from "./components/ui/button";
+import { useEditorImpl, useNoteData } from "./hooks";
 
 function App() {
 	const {} = useEditorImpl();
+	const { getNoteList } = useNoteData();
 	return (
 		<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-			<div className="w-screen h-screen flex flex-grow items-center">
+			<div className="flex items-center w-screen max-h-screen overflow-hidden">
 				<Sidebar />
-				<div className="p-6 min-h-screen">
-					<h1 className="text-xl font-bold">Document Title</h1>
+				<div className="min-h-screen p-6">
+					<Button
+						onClick={() => {
+							getNoteList();
+						}}
+					>
+						Testing
+					</Button>
+					{/* <h1 className="text-xl font-bold">Document Title</h1> */}
 				</div>
 			</div>
 		</ThemeProvider>

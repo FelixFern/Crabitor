@@ -1,0 +1,7 @@
+.fileList::-webkit-scrollbar { 
+    display: none;
+}
+
+.fileList { 
+    height: calc(100vh - 240px);
+}
