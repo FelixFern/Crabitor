@@ -1,9 +1,13 @@
+import { FilePathState } from "@/state";
 import { File } from "@/types";
 import { invoke } from "@tauri-apps/api";
 import { useEffect, useState } from "react";
+import { useRecoilState } from "recoil";
 import { toast } from "sonner";
 
 export const useNoteData = () => {
+	const [filePath, setFilePath] = useRecoilState(FilePathState);
+
 	const [noteList, setNoteList] = useState<File[]>([]);
 
 	const handleCreateFile = async () => {
@@ -25,6 +29,8 @@ export const useNoteData = () => {
 
 	return {
 		noteList,
+		filePath,
+		setFilePath,
 		handleCreateFile,
 	};
 };
