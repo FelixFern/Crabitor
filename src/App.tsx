@@ -1,19 +1,24 @@
 import { RecoilRoot } from "recoil";
 import "./App.css";
-import { Sidebar, ThemeProvider } from "./components/custom";
-import Editor from "./components/custom/Editor/Editor";
+import {
+	Editor,
+	KeyPressListener,
+	Sidebar,
+	ThemeProvider,
+} from "./components/custom";
 import { Toaster } from "./components/ui/sonner";
 
 function App() {
 	return (
 		<RecoilRoot>
 			<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-				<div className="flex items-center w-screen max-h-screen overflow-hidden">
-					<Sidebar />
-					<Editor />
-					<div className="min-h-screen p-6"></div>
-				</div>
-				<Toaster />
+				<KeyPressListener>
+					<div className="flex items-center w-screen max-h-screen overflow-hidden">
+						<Sidebar />
+						<Editor />
+					</div>
+					<Toaster />
+				</KeyPressListener>
 			</ThemeProvider>
 		</RecoilRoot>
 	);

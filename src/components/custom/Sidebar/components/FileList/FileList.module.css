@@ -5,3 +5,8 @@
 .fileList { 
     height: calc(100vh - 240px);
 }
+
+.activeList {
+    border-color: rgb(249 115 22 / var(--tw-border-opacity)) !important;
+    border-width: 2px;
+}

@@ -1,14 +1,23 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
-mod file;
+mod notes;
 
 fn main() {
-    use file::create_file;
-    use file::get_file_list;
+    use notes::create_file;
+    use notes::get_file_list;
+    use notes::read_note;
+    use notes::rename_file;
+    use notes::update_note;
 
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![create_file, get_file_list])
+        .invoke_handler(tauri::generate_handler![
+            create_file,
+            update_note,
+            read_note,
+            get_file_list,
+            rename_file
+        ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

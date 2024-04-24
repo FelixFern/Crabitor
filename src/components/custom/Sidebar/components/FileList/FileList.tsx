@@ -7,12 +7,12 @@ import {
 } from "@/components/ui/tooltip";
 import { useNoteData } from "@/hooks";
 import { getFileName } from "@/util/format";
-import classnames from "classnames";
+import { default as classNames, default as classnames } from "classnames";
 import { File as FileIcon, Plus } from "lucide-react";
 import styles from "./FileList.module.css";
 
 const FileList = () => {
-	const { noteList, setFilePath, handleCreateFile } = useNoteData();
+	const { noteList, filePath, setFilePath, handleCreateFile } = useNoteData();
 
 	return (
 		<TooltipProvider>
@@ -36,6 +36,7 @@ const FileList = () => {
 					)}
 				>
 					{noteList.map((val, index) => {
+						console.log(val.route === filePath);
 						return (
 							<Tooltip key={val.route}>
 								<TooltipContent side="left">
@@ -44,7 +45,14 @@ const FileList = () => {
 								<TooltipTrigger
 									onClick={() => setFilePath(val.route)}
 								>
-									<div className="relative p-2 w-fit h-fit border-[1px] dark:border-slate-700 border-slate-200 rounded-md cursor-pointer hover:opacity-60 transition-opacity focus:opacity-40	">
+									<div
+										className={classNames([
+											"relative p-2 w-fit h-fit border-[1px] dark:border-slate-700 border-slate-200 rounded-md cursor-pointer hover:opacity-60 transition-opacity focus:opacity-40",
+											filePath === val.route
+												? styles.activeList
+												: null,
+										])}
+									>
 										<FileIcon width={14} height={14} />
 										<div className="absolute w-2 h-2 flex items-center justify-center right-[-8px] text-sm bottom-[-8px] p-2 dark:bg-slate-950 bg-white">
 											{index + 1}

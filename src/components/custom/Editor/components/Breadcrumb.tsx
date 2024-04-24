@@ -5,6 +5,7 @@ import {
 	Breadcrumb as MainBreadcrum,
 } from "@/components/ui/breadcrumb";
 import { splitFilePath } from "@/util/format";
+import React from "react";
 
 const Breadcrumb = ({ filePath }: { filePath: string }) => {
 	return (
@@ -17,14 +18,16 @@ const Breadcrumb = ({ filePath }: { filePath: string }) => {
 							index ===
 							splitFilePath(filePath ?? "").length - 2
 						) {
-							return <BreadcrumbPage>{val}</BreadcrumbPage>;
+							return (
+								<BreadcrumbPage key={val}>{val}</BreadcrumbPage>
+							);
 						}
 
 						return (
-							<>
+							<React.Fragment key={val}>
 								<BreadcrumbList>{val}</BreadcrumbList>
 								<BreadcrumbSeparator />
-							</>
+							</React.Fragment>
 						);
 					})}
 			</BreadcrumbList>
