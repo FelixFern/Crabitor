@@ -1,8 +1,8 @@
 # Crabitor
 
-a Rust + React Text Editor (soon to be a Markdown Editor), this project is my first ever writing in Rust so please excuse the bad written code 😅. 
+a Rust + React Text Editor (soon to be a Markdown Editor), this project is my first ever writing in Rust so please excuse the badly written code 😅. 
 
-You might be wondering why don't you write the Frontend in Rust too? the main reason is that I just want to build this project quickly without thinking that much on the UI side, that's why I build it with React with Shadcn even though it might not be as performant as building it using Rust with framework such as Leptos. 
+You might be wondering why don't you write the Frontend in Rust too? the main reason is that I just want to build this project quickly without thinking that much on the UI side, that's why I build it with React with Shadcn even though it might not be as performant as building it using Rust with frameworks such as Leptos. 
 
 This project is started on April 17th, 2024 and is worked on in my spare time 
 
