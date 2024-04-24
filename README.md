@@ -1,10 +1,12 @@
-# Crabitor
+# 🦀 Crabitor
 
 a Rust + React Text Editor (soon to be a Markdown Editor), this project is my first ever writing in Rust so please excuse the badly written code 😅. 
 
 You might be wondering why don't you write the Frontend in Rust too? the main reason is that I just want to build this project quickly without thinking that much on the UI side, that's why I build it with React with Shadcn even though it might not be as performant as building it using Rust with frameworks such as Leptos. 
 
-This project is started on April 17th, 2024 and is worked on in my spare time 
+Why is it named "Crabitor"? because it is Crab-itor, Crab and editor, get it? because it is written in Rust with a Crab icon. Yes, I'm very creative.
+
+This project is started on April 17th, 2024, and is worked on in my spare time 
 
 
 <div style={{ text-align:"center"}}>
@@ -12,16 +14,9 @@ This project is started on April 17th, 2024 and is worked on in my spare time
   
 </div>
 
-## Current Feature 
-- Live File Save
-- Create New Note
-- Edit Note
-
-## Todos
-- Delete Note
-- Quick Command (cmd + shift + p)
-- Folder
-- Expandable Sidebar
+## 🗒️ Prerequisites
+- Node.js version 18 and up with package manage (npm, pnpm, yarn, or bun)
+- Rust with Cargo
 
 ## Tech Stack
 - Rust
@@ -30,10 +25,6 @@ This project is started on April 17th, 2024 and is worked on in my spare time
 - Tauri
 - Shadcn
 - Recoil
-
-## Pre-Requisite
-- Node.js version 18 and up with package manage (npm, pnpm, yarn, or bun)
-- Rust with Cargo
 
 ## How to Run ?
 1. Git clone this repository with
@@ -48,3 +39,19 @@ This project is started on April 17th, 2024 and is worked on in my spare time
    ```
    pnpm tauri dev
    ```
+
+## 🟢 Current Feature 
+- Live File Save ✅
+- Create New Note ✅
+- Update Note Name ✅
+- Edit Note ✅
+- Switch Between File with Hotkeys (cmd + [number]) (still buggy 🟠)  
+
+## 🟠 Todos
+- Delete Note
+- Quick Command (cmd + shift + p)
+- Folder
+- Expandable Sidebar
+
+## 🙎‍♂️ Maintained by 
+- @Felix Fernando | [Github](https://github.com/FelixFern) | [LinkedIn](https://www.linkedin.com/in/felix-fern/)
