@@ -2,13 +2,15 @@ import { useNoteData } from "@/hooks";
 import { Note } from "@/types";
 import { getFileName } from "@/util/format";
 import { invoke } from "@tauri-apps/api";
+import { Editor } from "@tiptap/react";
+import moment from "moment";
 import { SyntheticEvent, useEffect, useState } from "react";
 import { toast } from "sonner";
 
-export const useEditorImpl = () => {
+export const useEditorImpl = ({ editor }: { editor: Editor | null }) => {
 	const { filePath, setFilePath, getNoteList } = useNoteData();
 	const [filename, setFileName] = useState(getFileName(filePath ?? ""));
-	const [noteContent, setNoteContent] = useState<Note>();
+	const [lastUpdated, setLastUpdate] = useState("");
 
 	useEffect(() => {
 		setFileName(getFileName(filePath ?? ""));
@@ -20,18 +22,19 @@ export const useEditorImpl = () => {
 			filepath: filePath,
 		})) as Note;
 
-		setNoteContent({ ...note });
+		setLastUpdate(note.last_updated);
+
+		if (editor) {
+			editor.commands.setContent(note.note);
+		}
 	};
 
-	const handleUpdateNote = async (e: any) => {
+	const handleUpdateNote = async (html: string) => {
 		await invoke("update_note", {
-			note: e.target.value,
+			note: html,
 			filepath: filePath,
 		});
-
-		console.log("test");
-
-		setNoteContent(e.target.value);
+		setLastUpdate(moment(new Date()).format("YYYY-MM-DD HH:MM:ss +07:00"));
 	};
 
 	const handleRenameFile = async (e: SyntheticEvent) => {
@@ -65,9 +68,9 @@ export const useEditorImpl = () => {
 
 	return {
 		filePath,
-		noteContent,
 		setFilePath,
 		filename,
+		lastUpdated,
 		setFileName,
 		handleRenameFile,
 		handleUpdateNote,

@@ -12,7 +12,6 @@ export const KeyPressListener = ({
 
 	useEffect(() => {
 		const handleKeyPress = (event: KeyboardEvent) => {
-			console.log(event.key);
 			if (
 				(event.metaKey || event.ctrlKey) &&
 				event.key >= "1" &&
@@ -31,7 +30,7 @@ export const KeyPressListener = ({
 		return () => {
 			document.removeEventListener("keydown", handleKeyPress);
 		};
-	}, []);
+	}, [noteList]);
 
 	return <>{children}</>;
 };

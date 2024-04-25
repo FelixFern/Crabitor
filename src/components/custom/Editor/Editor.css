@@ -1,0 +1,76 @@
+.tiptap {
+  @apply min-h-full overflow-y-auto border-transparent rounded-md shadow-none outline-none; 
+  height: 1px;
+
+  ol {
+    list-style-type: decimal;    
+    margin-left: 2.5rem;
+  }
+  ul {
+    list-style-type: disc;
+    margin-left: 1.25rem;
+    padding: 0 1rem;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply mt-4 mb-2 font-bold;
+  }
+
+  h1 {
+    @apply text-3xl
+  }
+
+  h2 {
+    @apply text-2xl
+  }
+
+  h3  {
+    @apply text-xl
+  }
+
+  h4 {
+    @apply text-lg
+  }
+
+  code {
+    background-color: rgba(#616161, 0.1);
+    color: #616161;
+  }
+
+  pre {
+    background: #0D0D0D;
+    color: #FFF;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+
+    code {
+      color: inherit;
+      padding: 0;
+      background: none;
+      font-size: 0.8rem;
+    }
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  blockquote {
+    padding-left: 1rem;
+    border-left: 2px solid rgba(#0D0D0D, 0.1);
+  }
+
+  hr {
+    border: none;
+    border-top: 2px solid rgba(#0D0D0D, 0.1);
+    margin: 2rem 0;
+  }
+
+}
+

@@ -36,7 +36,6 @@ const FileList = () => {
 					)}
 				>
 					{noteList.map((val, index) => {
-						console.log(val.route === filePath);
 						return (
 							<Tooltip key={val.route}>
 								<TooltipContent side="left">

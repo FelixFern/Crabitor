@@ -1,4 +1,5 @@
 use chrono::Local;
+use serde_json::to_string;
 use std::{
     fs::{self, File, OpenOptions},
     io::{self, Read, Write},
@@ -97,6 +98,7 @@ pub fn update_note(note: String, filepath: String) -> Result<Note, String> {
 
         if let Ok(mut content_struct) = content_struct {
             content_struct.note = note;
+            content_struct.last_updated = Local::now().to_string();
 
             let update_content: Result<String, serde_json::Error> =
                 serde_json::to_string(&content_struct);
