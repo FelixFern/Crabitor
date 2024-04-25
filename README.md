@@ -23,8 +23,9 @@ This project is started on April 17th, 2024, and is worked on in my spare time
 - Typescript
 - React.js
 - Tauri
-- Shadcn
-- Recoil
+- [Shadcn](https://ui.shadcn.com/) - Component Library
+- [Recoil](https://recoiljs.org/) - Client Side State Library
+- [Tiptap](https://tiptap.dev) - WYSIWYG Editor
 
 ## How to Run ?
 1. Git clone this repository with
