@@ -23,8 +23,10 @@ pub struct Note {
 pub fn create_file(filename: String) {
     let file_path = format!("./data/{}.json", filename);
 
-    println!("{}", file_path);
-    let file = File::create(file_path);
+    let mut file = match File::create(file_path) {
+        Ok(v) => v,
+        Err(_) => panic!("Failed to create file"),
+    };
 
     let content: Note = Note {
         created_on: Local::now().to_string(),
@@ -32,13 +34,12 @@ pub fn create_file(filename: String) {
         note: "".to_string(),
     };
 
-    if let Ok(mut file) = file {
-        let json_content = serde_json::to_string(&content);
+    let json_content = match serde_json::to_string(&content) {
+        Ok(v) => v,
+        Err(_) => panic!("Failed to convert data to json"),
+    };
 
-        if let Ok(json_content) = json_content {
-            let _ = file.write_all(json_content.as_bytes());
-        }
-    }
+    let _ = file.write_all(json_content.as_bytes());
 }
 
 #[tauri::command]
