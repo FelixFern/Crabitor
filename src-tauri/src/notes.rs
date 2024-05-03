@@ -1,5 +1,5 @@
 use chrono::Local;
-use serde_json::to_string;
+use core::panic;
 use std::{
     fs::{self, File, OpenOptions},
     io::{self, Read, Write},
@@ -47,6 +47,7 @@ pub fn get_file_list() -> Result<Vec<FileStruct>, String> {
 
     let paths: fs::ReadDir =
         std::fs::read_dir("./data").map_err(|e| format!("Error reading directory: {}", e))?;
+
     for path in paths {
         if let Ok(entry) = path {
             let route = entry.path().to_str().unwrap_or("").to_string();
@@ -60,16 +61,15 @@ pub fn get_file_list() -> Result<Vec<FileStruct>, String> {
 #[tauri::command]
 pub fn rename_file(prev_route: String, new_route: String) -> Result<String, String> {
     println!("{} {}", prev_route, new_route);
-    let curr_route: Result<Vec<FileStruct>, String> = get_file_list();
+    let curr_route = match get_file_list() {
+        Ok(v) => v,
+        Err(_) => panic!("Error getting current file list"),
+    };
 
-    if let Ok(curr_files) = &curr_route {
-        for file in curr_files {
-            if file.route == new_route {
-                return Err("Duplicate File Name Found".into());
-            }
+    for file in curr_route {
+        if file.route == new_route {
+            return Err("Duplicate File Name Found".into());
         }
-    } else {
-        return Err("Error getting current file list".into());
     }
 
     if let Err(err) = fs::rename(&prev_route, &new_route) {
@@ -84,66 +84,61 @@ pub fn rename_file(prev_route: String, new_route: String) -> Result<String, Stri
 
 #[tauri::command]
 pub fn update_note(note: String, filepath: String) -> Result<Note, String> {
-    let file = File::open(&filepath);
-    println!("{:?} {:?}", note, filepath);
+    let mut file = match File::open(&filepath) {
+        Ok(v) => v,
+        Err(_) => panic!("Failed to open note"),
+    };
+
+    let mut content = String::new();
+
+    let _ = file.read_to_string(&mut content);
+
+    let mut content_struct: Note = match serde_json::from_str(&content) {
+        Ok(v) => v,
+        Err(_) => panic!("Failed to update note"),
+    };
+
+    drop(file);
+
+    content_struct.note = note;
+    content_struct.last_updated = Local::now().to_string();
+
+    let update_content = match serde_json::to_string(&content_struct) {
+        Ok(v) => v,
+        Err(_) => panic!("Failed to update note"),
+    };
+
+    let file = OpenOptions::new().write(true).truncate(true).open(filepath);
 
     if let Ok(mut file) = file {
-        let mut content = String::new();
-
-        let _ = file.read_to_string(&mut content);
-
-        let content_struct: Result<Note, serde_json::Error> = serde_json::from_str(&content);
-
-        drop(file);
-
-        if let Ok(mut content_struct) = content_struct {
-            content_struct.note = note;
-            content_struct.last_updated = Local::now().to_string();
-
-            let update_content: Result<String, serde_json::Error> =
-                serde_json::to_string(&content_struct);
-
-            if let Ok(update_content) = update_content {
-                let file = OpenOptions::new().write(true).truncate(true).open(filepath);
-
-                if let Ok(mut file) = file {
-                    let _ = (file).write_all(update_content.as_bytes());
-                }
-            }
-
-            Ok(content_struct)
-        } else {
-            Err("Failed to update note".to_string())
-        }
-    } else {
-        Err("Failed to open note".to_string())
+        let _ = (file).write_all(update_content.as_bytes());
     }
+
+    Ok(content_struct)
 }
 
 #[tauri::command]
 pub fn read_note(filepath: String) -> Result<Note, String> {
-    let file = File::open(filepath);
+    let mut file = match File::open(filepath) {
+        Ok(v) => v,
+        Err(_) => panic!("Failed to open note"),
+    };
 
-    if let Ok(mut file) = file {
-        let mut content = String::new();
+    let mut content = String::new();
 
-        let _ = file.read_to_string(&mut content);
+    let _ = file.read_to_string(&mut content);
 
-        let content_struct: Result<Note, serde_json::Error> = serde_json::from_str(&content);
+    let content_struct = match serde_json::from_str(&content) {
+        Ok(v) => v,
+        Err(_) => panic!("Failed to read data"),
+    };
 
-        if let Ok(content_struct) = content_struct {
-            let update_content: Result<String, serde_json::Error> =
-                serde_json::to_string(&content_struct);
+    let update_content = match serde_json::to_string(&content_struct) {
+        Ok(v) => v,
+        Err(_) => panic!("Failed to read data"),
+    };
 
-            if let Ok(update_content) = update_content {
-                let _ = file.write_all(update_content.as_bytes());
-            }
+    let _ = file.write_all(update_content.as_bytes());
 
-            Ok(content_struct)
-        } else {
-            Err("Failed to read data".to_string())
-        }
-    } else {
-        Err("Failed to open note".to_string())
-    }
+    Ok(content_struct)
 }
