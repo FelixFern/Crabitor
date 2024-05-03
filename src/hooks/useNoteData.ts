@@ -14,7 +14,7 @@ export const useNoteData = () => {
 		await invoke("create_file", { filename: filename });
 
 		getNoteList();
-		toast(`Created file with name ${filename}`);
+		toast.success(`Created file with name ${filename}`);
 	};
 
 	const getNoteList = async () => {

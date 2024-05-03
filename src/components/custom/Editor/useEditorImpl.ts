@@ -56,12 +56,12 @@ export const useEditorImpl = ({ editor }: { editor: Editor | null }) => {
 				prevRoute: filePath ?? "",
 				newRoute: new_route,
 			});
-			toast(rename as string);
+			toast.success(rename as string);
 
 			setFilePath(new_route);
 		} catch (err) {
 			setFileName(getFileName(filePath ?? ""));
-			toast(err as string);
+			toast.error(err as string);
 		}
 		getNoteList();
 	};
