@@ -1,6 +1,7 @@
 import { RecoilRoot } from "recoil";
 import "./App.css";
 import {
+	CommandInput,
 	Editor,
 	KeyPressListener,
 	Sidebar,
@@ -19,6 +20,7 @@ function App() {
 					</div>
 					<Toaster />
 				</KeyPressListener>
+				<CommandInput />
 			</ThemeProvider>
 		</RecoilRoot>
 	);

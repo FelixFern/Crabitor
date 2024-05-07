@@ -1,0 +1,45 @@
+.commandInput {
+    position: fixed;
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    
+    &::before {
+        content:"";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;    
+        @apply bg-slate-800;
+        opacity: 0.5;
+        z-index: -1;
+    }
+
+    .commandInputDialog {
+        width: 50vw;
+        height: fit-content;
+        margin-top: 10%;
+        @apply rounded-lg bg-slate-100 dark:bg-slate-800;
+    }
+
+    .inputContainer {
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        padding-left: 0.75em;
+        input {
+            flex-grow: 1;
+            border: none !important;
+            outline: none !important;
+            box-shadow: none !important;
+        }
+    }
+
+}
+
