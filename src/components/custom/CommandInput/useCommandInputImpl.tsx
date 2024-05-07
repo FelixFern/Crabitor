@@ -1,7 +1,8 @@
+import { useNoteData } from "@/hooks";
 import { CommandInputState } from "@/state/commandInputState";
-import { DoorClosedIcon, Palette, Trash2 } from "lucide-react";
+import { DoorClosedIcon, File, Palette, Trash2 } from "lucide-react";
 import React, { useEffect, useMemo, useRef, useState } from "react";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 export type TCommandItem = {
 	name: string;
@@ -11,7 +12,10 @@ export type TCommandItem = {
 
 export const useCommandInputImpl = () => {
 	const [commandSearch, setCommandSearch] = useState("");
-	const commandInput = useRecoilValue(CommandInputState);
+
+	const { handleCreateFile } = useNoteData();
+
+	const [commandInput, setCommandInput] = useRecoilState(CommandInputState);
 	const commandInputRef = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
@@ -34,6 +38,11 @@ export const useCommandInputImpl = () => {
 					action: () => {},
 				},
 				{
+					name: "New File",
+					icon: <File size={16} />,
+					action: () => handleCreateFile(),
+				},
+				{
 					name: "Toggle Theme",
 					icon: <Palette size={16} />,
 					action: () => {},
@@ -46,6 +55,25 @@ export const useCommandInputImpl = () => {
 		return commandList.filter((val) =>
 			val.name.toLowerCase().includes(commandSearch.toLowerCase())
 		);
+	}, [commandSearch]);
+
+	useEffect(() => {
+		const handleKeyPress = (event: KeyboardEvent) => {
+			if (
+				event.key === "Enter" &&
+				filteredCommand.length > 0 &&
+				commandInput
+			) {
+				filteredCommand[0].action();
+				setCommandInput(false);
+			}
+		};
+
+		document.addEventListener("keydown", handleKeyPress);
+
+		return () => {
+			document.removeEventListener("keydown", handleKeyPress);
+		};
 	}, [commandSearch]);
 
 	return {

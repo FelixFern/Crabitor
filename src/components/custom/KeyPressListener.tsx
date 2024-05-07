@@ -10,7 +10,7 @@ export const KeyPressListener = ({
 }) => {
 	const setFilePath = useSetRecoilState(FilePathState);
 	const noteList = useRecoilValue(NoteListState);
-	const [commandInput, setCommandInput] = useRecoilState(CommandInputState);
+	const [_, setCommandInput] = useRecoilState(CommandInputState);
 
 	const keyPresses = (event: KeyboardEvent) => {
 		return [

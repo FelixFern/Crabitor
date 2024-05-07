@@ -1,8 +1,12 @@
 import { cn } from "@/lib/utils";
+import { CommandInputState } from "@/state";
+import { useSetRecoilState } from "recoil";
 import { TCommandItem } from "../useCommandInputImpl";
 import styles from "./CommandList.module.css";
 
 const CommandList = ({ commandList }: { commandList: TCommandItem[] }) => {
+	const setCommandInput = useSetRecoilState(CommandInputState);
+
 	return (
 		<div className={styles.commandItemList}>
 			<p className="mt-2 mb-1 ml-4 font-mono text-xs text-slate-400 dark:text-slate-100">
@@ -23,7 +27,16 @@ const CommandList = ({ commandList }: { commandList: TCommandItem[] }) => {
 							"focus:bg-slate-200 focus:outline-none hover:bg-slate-200 rounded-md",
 						])}
 						role="button"
-						onClick={() => command.action()}
+						onClick={() => {
+							command.action();
+							setCommandInput(false);
+						}}
+						onKeyDown={(e) => {
+							if (e.key === "Enter") {
+								command.action();
+								setCommandInput(false);
+							}
+						}}
 					>
 						{command.icon}
 						<p className="text-sm">{command.name}</p>
