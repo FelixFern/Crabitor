@@ -1,8 +1,15 @@
 import { useNoteData } from "@/hooks";
 import { CommandInputState } from "@/state/commandInputState";
 import { DoorClosedIcon, File, Palette, Trash2 } from "lucide-react";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, {
+	useCallback,
+	useEffect,
+	useMemo,
+	useRef,
+	useState,
+} from "react";
 import { useRecoilState } from "recoil";
+import { useTheme } from "../ThemeProvider";
 
 export type TCommandItem = {
 	name: string;
@@ -13,7 +20,8 @@ export type TCommandItem = {
 export const useCommandInputImpl = () => {
 	const [commandSearch, setCommandSearch] = useState("");
 
-	const { handleCreateFile } = useNoteData();
+	const { handleCreateFile, handleDeletefile } = useNoteData();
+	const { theme, setTheme } = useTheme();
 
 	const [commandInput, setCommandInput] = useRecoilState(CommandInputState);
 	const commandInputRef = useRef<HTMLInputElement>(null);
@@ -25,6 +33,15 @@ export const useCommandInputImpl = () => {
 		}
 	}, [commandInput]);
 
+	const handleToggleTheme = useCallback(() => {
+		console.log(theme);
+		if (theme === "dark") {
+			setTheme("light");
+		} else {
+			setTheme("dark");
+		}
+	}, [theme]);
+
 	const commandList = useMemo(
 		() =>
 			[
@@ -35,7 +52,7 @@ export const useCommandInputImpl = () => {
 				{
 					name: "Delete File",
 					icon: <Trash2 size={16} />,
-					action: () => {},
+					action: () => handleDeletefile(),
 				},
 				{
 					name: "New File",
@@ -45,7 +62,7 @@ export const useCommandInputImpl = () => {
 				{
 					name: "Toggle Theme",
 					icon: <Palette size={16} />,
-					action: () => {},
+					action: () => handleToggleTheme(),
 				},
 			] as TCommandItem[],
 		[]

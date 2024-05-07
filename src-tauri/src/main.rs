@@ -5,6 +5,7 @@ mod notes;
 
 fn main() {
     use notes::create_file;
+    use notes::delete_note;
     use notes::get_file_list;
     use notes::read_note;
     use notes::rename_file;
@@ -16,7 +17,8 @@ fn main() {
             update_note,
             read_note,
             get_file_list,
-            rename_file
+            rename_file,
+            delete_note,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

@@ -17,9 +17,21 @@ export const useNoteData = () => {
 		toast.success(`Created file with name ${filename}`);
 	};
 
+	const handleDeletefile = async () => {
+		console.log(filePath);
+		try {
+			await invoke("delete_note", { filepath: filePath });
+		} catch (err) {
+			toast.error(String(err));
+		}
+
+		getNoteList();
+	};
+
 	const getNoteList = async () => {
 		const list = (await invoke("get_file_list", {})) as File[];
 		setNoteList([...list]);
+		setFilePath(noteList[0].route);
 	};
 
 	useEffect(() => {
@@ -29,8 +41,9 @@ export const useNoteData = () => {
 	return {
 		noteList,
 		filePath,
+		getNoteList,
 		setFilePath,
 		handleCreateFile,
-		getNoteList,
+		handleDeletefile,
 	};
 };

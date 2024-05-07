@@ -1,11 +1,10 @@
 use chrono::Local;
 use core::panic;
+use serde::{Deserialize, Serialize};
 use std::{
     fs::{self, File, OpenOptions},
     io::{self, Read, Write},
 };
-
-use serde::{Deserialize, Serialize};
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct FileStruct {
@@ -20,7 +19,7 @@ pub struct Note {
 }
 
 #[tauri::command]
-pub fn create_file(filename: String) {
+pub fn create_file(filename: String) -> Result<String, String> {
     let file_path = format!("./data/{}.json", filename);
 
     let mut file =
@@ -36,6 +35,8 @@ pub fn create_file(filename: String) {
         .unwrap_or_else(|e| panic!("Failed to convert data to json: {}", e));
 
     let _ = file.write_all(json_content.as_bytes());
+
+    Ok("File created successfully".to_string())
 }
 
 #[tauri::command]
@@ -124,4 +125,13 @@ pub fn read_note(filepath: String) -> Result<Note, String> {
     let _ = file.write_all(update_content.as_bytes());
 
     Ok(content_struct)
+}
+
+#[tauri::command]
+pub fn delete_note(filepath: String) -> Result<String, String> {
+    println!("{}", filepath);
+    match fs::remove_file(filepath) {
+        Ok(_) => Ok("File deleted successfully".to_string()),
+        Err(e) => Err(e.to_string()),
+    }
 }
