@@ -11,12 +11,9 @@ This project is started on April 17th, 2024, and is worked on in my spare time
 
 
 <div style={{ text-align:"center", display:"flex", flex-direction: "col" align-items:"center"}}>
-  <img width="1710" alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/68f55ddc-bc7c-46c8-96d5-24feaafdbfab">
-  <div style={{ display: "flex" flex-direction: "row", justify-content: "center"}}>
-    <img width="500px" style={{flex-grow: 1}} alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/b7590fc6-f4b1-47ae-a593-983d621f17ec">
-    <img width="500px" style={{flex-grow: 1}} alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/3f77d4bc-6c99-476d-a311-4aa219954087">
-    
-  </div>
+  <img width="1000px" alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/68f55ddc-bc7c-46c8-96d5-24feaafdbfab">
+  <img width="1000px" style={{flex-grow: 1}} alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/b7590fc6-f4b1-47ae-a593-983d621f17ec">
+  <img width="1000px" style={{flex-grow: 1}} alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/3f77d4bc-6c99-476d-a311-4aa219954087">    
 </div>
 
 ## 🗒️ Prerequisites
