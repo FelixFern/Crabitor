@@ -110,21 +110,25 @@ pub fn update_note(note: String, filepath: String) -> Result<Note, String> {
 
 #[tauri::command]
 pub fn read_note(filepath: String) -> Result<Note, String> {
-    let mut file = File::open(filepath).unwrap_or_else(|e| panic!("Failed to open note: {}", e));
+    let file = File::open(filepath);
 
-    let mut content = String::new();
+    if let Ok(mut file) = file {
+        let mut content = String::new();
 
-    let _ = file.read_to_string(&mut content);
+        let _ = file.read_to_string(&mut content);
 
-    let content_struct =
-        serde_json::from_str(&content).unwrap_or_else(|e| panic!("Failed to read data: {}", e));
+        let content_struct =
+            serde_json::from_str(&content).unwrap_or_else(|e| panic!("Failed to read data: {}", e));
 
-    let update_content = serde_json::to_string(&content_struct)
-        .unwrap_or_else(|e| panic!("Failed to open note: {}", e));
+        let update_content = serde_json::to_string(&content_struct)
+            .unwrap_or_else(|e| panic!("Failed to open note: {}", e));
 
-    let _ = file.write_all(update_content.as_bytes());
+        let _ = file.write_all(update_content.as_bytes());
 
-    Ok(content_struct)
+        Ok(content_struct)
+    } else {
+        Err("Failed to read note".to_string())
+    }
 }
 
 #[tauri::command]

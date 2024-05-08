@@ -17,13 +17,16 @@ export const KeyPressListener = ({
 			{
 				key:
 					(event.metaKey || event.ctrlKey) &&
-					event.key >= "1" &&
+					event.key >= "0" &&
 					event.key <= "9",
 				action: () => {
 					const number = parseInt(event.key, 10);
 
+					if (number == 0) setFilePath(null);
 					if (number <= noteList.length) {
 						setFilePath(noteList[number - 1].route);
+					} else {
+						setFilePath(null);
 					}
 				},
 			},

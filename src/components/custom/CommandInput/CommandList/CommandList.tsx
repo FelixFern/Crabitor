@@ -17,14 +17,14 @@ const CommandList = ({ commandList }: { commandList: TCommandItem[] }) => {
 					No command not found
 				</p>
 			)}
-			{commandList.map((command, index) => {
+			{commandList.map((command) => {
 				return (
 					<div
-						tabIndex={index}
+						tabIndex={0}
 						key={command.name}
 						className={cn([
 							styles.commandItem,
-							"focus:bg-slate-200 focus:outline-none hover:bg-slate-200 rounded-md",
+							"focus:bg-slate-200 focus:outline-none hover:bg-slate-200 dark:hover:bg-slate-900 rounded-md",
 						])}
 						role="button"
 						onClick={() => {

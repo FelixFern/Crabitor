@@ -17,7 +17,12 @@ const CommandInput = () => {
 	return (
 		commandInput && (
 			<div className={styles.commandInput}>
-				<div className={cn([styles.commandInputDialog, "shadow-md"])}>
+				<div
+					className={cn([
+						styles.commandInputDialog,
+						"shadow-md bg-slate-100 dark:bg-zinc-900",
+					])}
+				>
 					<div className={styles.inputContainer}>
 						<SearchIcon height={16} />
 						<Input

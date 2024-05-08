@@ -1,13 +1,15 @@
 import { useNoteData } from "@/hooks";
 import { CommandInputState } from "@/state/commandInputState";
-import { DoorClosedIcon, File, Palette, Trash2 } from "lucide-react";
-import React, {
-	useCallback,
-	useEffect,
-	useMemo,
-	useRef,
-	useState,
-} from "react";
+import {
+	DoorClosedIcon,
+	File,
+	FileBadge2Icon,
+	Moon,
+	Palette,
+	Sun,
+	Trash2,
+} from "lucide-react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { useRecoilState } from "recoil";
 import { useTheme } from "../ThemeProvider";
 
@@ -21,7 +23,7 @@ export const useCommandInputImpl = () => {
 	const [commandSearch, setCommandSearch] = useState("");
 
 	const { handleCreateFile, handleDeletefile } = useNoteData();
-	const { theme, setTheme } = useTheme();
+	const { setTheme } = useTheme();
 
 	const [commandInput, setCommandInput] = useRecoilState(CommandInputState);
 	const commandInputRef = useRef<HTMLInputElement>(null);
@@ -33,14 +35,9 @@ export const useCommandInputImpl = () => {
 		}
 	}, [commandInput]);
 
-	const handleToggleTheme = useCallback(() => {
-		console.log(theme);
-		if (theme === "dark") {
-			setTheme("light");
-		} else {
-			setTheme("dark");
-		}
-	}, [theme]);
+	const handleToggleTheme = (theme: "dark" | "light" | "system") => {
+		setTheme(theme);
+	};
 
 	const commandList = useMemo(
 		() =>
@@ -60,9 +57,24 @@ export const useCommandInputImpl = () => {
 					action: () => handleCreateFile(),
 				},
 				{
-					name: "Toggle Theme",
+					name: "Toggle Dark Theme",
+					icon: <Moon size={16} />,
+					action: () => handleToggleTheme("dark"),
+				},
+				{
+					name: "Toggle Light Theme",
+					icon: <Sun size={16} />,
+					action: () => handleToggleTheme("light"),
+				},
+				{
+					name: "Toggle System Theme",
 					icon: <Palette size={16} />,
-					action: () => handleToggleTheme(),
+					action: () => handleToggleTheme("system"),
+				},
+				{
+					name: "Rename File",
+					icon: <FileBadge2Icon size={16} />,
+					action: () => {},
 				},
 			] as TCommandItem[],
 		[]

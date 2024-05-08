@@ -18,9 +18,9 @@ export const useNoteData = () => {
 	};
 
 	const handleDeletefile = async () => {
-		console.log(filePath);
 		try {
-			await invoke("delete_note", { filepath: filePath });
+			await invoke("delete_note", { filepath: filePath ?? "" });
+			toast.success("File deleted successfully");
 		} catch (err) {
 			toast.error(String(err));
 		}
@@ -31,7 +31,11 @@ export const useNoteData = () => {
 	const getNoteList = async () => {
 		const list = (await invoke("get_file_list", {})) as File[];
 		setNoteList([...list]);
-		setFilePath(noteList[0].route);
+		if (list.length > 0) {
+			setFilePath(list[0].route);
+		} else {
+			setFilePath(null);
+		}
 	};
 
 	useEffect(() => {

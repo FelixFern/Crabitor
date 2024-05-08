@@ -12,7 +12,7 @@ import { Toaster } from "./components/ui/sonner";
 function App() {
 	return (
 		<RecoilRoot>
-			<ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+			<ThemeProvider defaultTheme="dark" storageKey="crabitor-ui-theme">
 				<KeyPressListener>
 					<div className="flex items-center w-screen max-h-screen overflow-hidden">
 						<Sidebar />
