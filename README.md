@@ -7,11 +7,16 @@ You might be wondering why don't you write the Frontend in Rust too. the main re
 Why is it named "Crabitor"? because it is Crab-itor, Crab, and editor, get it? because it is written in Rust with a Crab icon. Yes, I'm very creative.
 
 This project is started on April 17th, 2024, and is worked on in my spare time 
-<img width="1710" alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/68f55ddc-bc7c-46c8-96d5-24feaafdbfab">
 
-<div style={{ text-align:"center", display:"flex"}}>
-  <img width="480" alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/b7590fc6-f4b1-47ae-a593-983d621f17ec">
-  <img width="480" alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/3f77d4bc-6c99-476d-a311-4aa219954087">
+
+
+<div style={{ text-align:"center", display:"flex", flex-direction: "col" align-items:"center"}}>
+  <img width="1710" alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/68f55ddc-bc7c-46c8-96d5-24feaafdbfab">
+  <div style={{ display: "flex" flex-direction: "row", justify-content: "center"}}>
+    <img width="855" alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/b7590fc6-f4b1-47ae-a593-983d621f17ec">
+    <img width="855" alt="image" src="https://github.com/FelixFern/Crabitor/assets/28957554/3f77d4bc-6c99-476d-a311-4aa219954087">
+    
+  </div>
 </div>
 
 ## 🗒️ Prerequisites
