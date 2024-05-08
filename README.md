@@ -17,7 +17,7 @@ This project is started on April 17th, 2024, and is worked on in my spare time
 </div>
 
 ## 🗒️ Prerequisites
-- Node.js version 18 and up with package manage (npm, pnpm, yarn, or bun)
+- Node.js version 18 and up with package manager (npm, pnpm, yarn, or bun)
 - Rust with Cargo
 
 ## Tech Stack
