@@ -8,7 +8,7 @@ const Hotkey = ({ name, keys }: { name: string; keys: React.ReactNode[] }) => {
 				<>
 					{keys.map((val) => {
 						return (
-							<div className="flex items-center justify-center h-5 px-2 bg-orange-500 rounded-sm min-w-5 text-slate-200">
+							<div className="flex items-center justify-center h-5 px-2 bg-orange-500 rounded-sm opacity-50 min-w-5 text-slate-200">
 								{val}
 							</div>
 						);

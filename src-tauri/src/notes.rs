@@ -133,7 +133,6 @@ pub fn read_note(filepath: String) -> Result<Note, String> {
 
 #[tauri::command]
 pub fn delete_note(filepath: String) -> Result<String, String> {
-    println!("{}", filepath);
     match fs::remove_file(filepath) {
         Ok(_) => Ok("File deleted successfully".to_string()),
         Err(e) => Err(e.to_string()),
