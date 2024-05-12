@@ -38,10 +38,6 @@ const Editor = () => {
 		handleUpdateNote,
 	} = useEditorImpl({ editor: editor });
 
-	// if (!filePath) {
-	// 	return;
-	// }
-
 	return (
 		<div className="flex flex-col w-full h-screen p-10">
 			{!filePath && <EmptyScreen />}
