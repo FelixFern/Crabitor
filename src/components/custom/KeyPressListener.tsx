@@ -1,65 +1,71 @@
+import { useNoteData } from "@/hooks";
 import { FilePathState, NoteListState } from "@/state";
 import { CommandInputState } from "@/state/commandInputState";
 import { useEffect } from "react";
 import { useRecoilState, useRecoilValue, useSetRecoilState } from "recoil";
 
 export const KeyPressListener = ({
-	children,
+  children,
 }: {
-	children: React.ReactNode;
+  children: React.ReactNode;
 }) => {
-	const setFilePath = useSetRecoilState(FilePathState);
-	const noteList = useRecoilValue(NoteListState);
-	const [_, setCommandInput] = useRecoilState(CommandInputState);
+  const setFilePath = useSetRecoilState(FilePathState);
+  const noteList = useRecoilValue(NoteListState);
+  const [_, setCommandInput] = useRecoilState(CommandInputState);
+  const { handleCreateFile } = useNoteData();
 
-	const keyPresses = (event: KeyboardEvent) => {
-		return [
-			{
-				key:
-					(event.metaKey || event.ctrlKey) &&
-					event.key >= "0" &&
-					event.key <= "9",
-				action: () => {
-					const number = parseInt(event.key, 10);
+  const keyPresses = (event: KeyboardEvent) => {
+    return [
+      {
+        key:
+          (event.metaKey || event.ctrlKey) &&
+          event.key >= "0" &&
+          event.key <= "9",
+        action: () => {
+          const number = parseInt(event.key, 10);
 
-					if (number == 0) setFilePath(null);
-					if (number <= noteList.length) {
-						setFilePath(noteList[number - 1].route);
-					} else {
-						setFilePath(null);
-					}
-				},
-			},
-			{
-				key: event.shiftKey && event.key === "k",
-				action: () => {
-					setCommandInput((val) => !val);
-				},
-			},
-			{
-				key: event.key === "Escape",
-				action: () => {
-					setCommandInput(false);
-				},
-			},
-		];
-	};
+          if (number == 0) setFilePath(null);
+          if (number <= noteList.length) {
+            setFilePath(noteList[number - 1].route);
+          } else {
+            setFilePath(null);
+          }
+        },
+      },
+      {
+        key: event.shiftKey && event.key === "p",
+        action: () => {
+          setCommandInput((val) => !val);
+        },
+      },
+      {
+        key: (event.metaKey || event.ctrlKey) && event.key === "n",
+        action: () => handleCreateFile(),
+      },
+      {
+        key: event.key === "Escape",
+        action: () => {
+          setCommandInput(false);
+        },
+      },
+    ];
+  };
 
-	const handleKeyPress = (event: KeyboardEvent) => {
-		keyPresses(event).forEach((press) => {
-			if (press.key) {
-				press.action();
-			}
-		});
-	};
+  const handleKeyPress = (event: KeyboardEvent) => {
+    keyPresses(event).forEach((press) => {
+      if (press.key) {
+        press.action();
+      }
+    });
+  };
 
-	useEffect(() => {
-		document.addEventListener("keydown", handleKeyPress);
+  useEffect(() => {
+    document.addEventListener("keydown", handleKeyPress);
 
-		return () => {
-			document.removeEventListener("keydown", handleKeyPress);
-		};
-	}, [noteList]);
+    return () => {
+      document.removeEventListener("keydown", handleKeyPress);
+    };
+  }, [noteList]);
 
-	return <>{children}</>;
+  return <>{children}</>;
 };
